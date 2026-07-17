@@ -2,27 +2,18 @@ import java.util.Scanner;
 
 public class STAGE1 {
     //Methods
-    static double ShowBalance(double balance){
+    static double showBalance(double balance){
         return balance;
     }
-    static double deposit(double deposit,double balance){
+    static double deposit(double amount,double balance){
         
-        /// Earlier it was balance += deposit;
+  //// balance += deposit, not =+ (typo trap: = + is NOT +=)
         
-        /// Therefore when we added 30 then again added 50 the output was shown 50 not 80 because
-        /// =+ is not +=. Java doesn't care about your spacing — balance=+deposit; 
-        /// is parsed as balance = (+deposit); 
-        /// — that's an assignment of the unary plus of deposit (which does nothing useful; unary + on a number
-        ///  just returns the number itself). So every single deposit call overwrites balance with whatever you 
-        /// just deposited, throwing away everything that was there before.
-        
-        
-        
-        balance += deposit;
+        balance += amount;
         return balance;
     }
-    static double withdrawal(double withdrwal,double balance){
-        balance -= withdrwal;
+    static double withdrawal(double amount,double balance){
+        balance -= amount;
         return balance;
     }
     //Main line
@@ -35,22 +26,35 @@ public class STAGE1 {
                 System.out.print("""
                     ### Select a menu ####
                     1) Show balance:
-                    2) Deposit:
+                    2) deposit:
                     3) Withdraw: 
                     4) Exit:
                     """);
                 option = scanner.nextInt();//taking input for option variable
                 switch (option) {
-                    case 1 -> System.out.printf("Current balance is: %.2f\n $",ShowBalance(balance)); //Outputs Balance
+                    case 1 -> System.out.printf("Current balance is: %.2f$\n",showBalance(balance)); //Outputs Balance
                     case 2 -> {
                         System.out.print("Enter deposit amount: ");
-                        double depositAmount = scanner.nextDouble();
-                        balance = deposit(depositAmount, balance);//Adds Deposited ammount in the Current balance
+                        double amount = scanner.nextDouble();
+                        if (amount<=0) { // to check the validity of the entered amount
+                            System.out.print("Please Input a Valid Amount");
+                        }
+                        else{
+                            balance = deposit(amount, balance);//Adds amount in the Current balance
+                        }
                     }
                     case 3 -> {
                         System.out.print("Enter withdrawal amount: ");
-                        double withdrawalAmount = scanner.nextDouble();
-                        balance = withdrawal(withdrawalAmount, balance);//Substracts Withdrawed money from the balance
+                        double amount = scanner.nextDouble();
+                        if (amount<=0) { //checks the validity of withdrawal amount
+                            System.out.print("Please Input a Valid Amount");
+                        }
+                        else if (amount>balance){ //ensures if the amount is less than or equal to current balance
+                            System.out.print("Not enough balance");
+                        }
+                        else{
+                        balance = withdrawal(amount, balance);//Subtract amount from the balance
+                    }
                     }
                     case 4 ->{ System.out.println("Exiting...");
                         System.out.println("Thanks for using our Banking App");
