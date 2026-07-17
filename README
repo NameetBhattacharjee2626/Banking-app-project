@@ -1,0 +1,73 @@
+# Java Banking Application
+
+## Project Overview
+
+This project is a long-term Java banking application that evolves alongside my learning journey in Java and software engineering. Rather than building multiple disconnected mini-projects, I am continuously expanding and refactoring a single application as I learn new concepts.
+
+The application begins as a simple console-based banking system capable of creating accounts, depositing money, withdrawing funds, transferring money, and checking account balances. As my Java knowledge grows, the project will gradually incorporate object-oriented design, collections, file handling, exception handling, database integration, multithreading, and other advanced concepts.
+
+The primary goal of this project is not only to build a functional banking system but also to demonstrate the evolution of my programming skills through iterative development, clean code practices, and software design principles.
+
+## Learning Objectives
+
+Through this project, I aim to:
+
+* Strengthen problem-solving and algorithmic thinking.
+* Develop a strong understanding of Java fundamentals and Object-Oriented Programming.
+* Learn how to design scalable and maintainable software.
+* Practice clean code, modular design, and refactoring.
+* Gain experience with data structures, file handling, exception handling, JDBC, SQL, and multithreading.
+* Build a professional GitHub portfolio that showcases continuous improvement over time.
+
+## Planned Features
+
+### Phase 1
+
+* Create bank accounts
+* Deposit money
+* Withdraw money
+* Check account balance
+
+### Phase 2
+
+* Multiple customer accounts
+* Money transfers
+* Transaction history
+
+### Phase 3
+
+* Object-oriented architecture with dedicated classes for customers, accounts, and the bank
+
+### Phase 4
+
+* Collections for efficient account management
+* Search and account lookup
+
+### Phase 5
+
+* Persistent data storage using file handling
+
+### Phase 6
+
+* Robust input validation and custom exception handling
+
+### Phase 7
+
+* Database integration using JDBC and SQL
+
+### Phase 8
+
+* Concurrent transaction handling with multithreading
+
+### Future Enhancements
+
+* Authentication and user login
+* Interest calculation
+* Loan management
+* Administrative dashboard
+* REST API or graphical user interface
+* Unit testing and automated testing
+
+## Project Philosophy
+
+This repository is intended to document my progression as a software engineer. Each feature, refactor, and improvement reflects concepts learned over time, demonstrating not only the final product but also the engineering process behind its development.
