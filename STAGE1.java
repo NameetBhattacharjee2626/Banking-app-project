@@ -1,23 +1,27 @@
 import java.util.Scanner;
 
 public class STAGE1 {
-    // This method shows the current balance to the user.
+    // Return the current balance without changing it.
     static double showBalance(double balance) {
         return balance;
     }
 
-    // This method adds money to the balance.
-    // The amount must be positive to be valid.
+    // Add money to the balance only when the deposit amount is valid.
+    // Invalid values such as zero or a negative number are ignored.
     static double deposit(double amount, double balance) {
-        balance += amount;
-        return balance;
+        if (amount <= 0) {
+            return balance;
+        }
+        return balance + amount;
     }
 
-    // This method removes money from the balance.
-    // The amount must be positive and not more than the current balance.
+    // Remove money from the balance only when the withdrawal amount is valid.
+    // The amount must be positive and cannot exceed the current balance.
     static double withdrawal(double amount, double balance) {
-        balance -= amount;
-        return balance;
+        if (amount <= 0 || amount > balance) {
+            return balance;
+        }
+        return balance - amount;
     }
 
     public static void main(String[] args) {
@@ -30,6 +34,7 @@ public class STAGE1 {
 
             // Keep showing the menu until the user chooses to exit.
             do {
+                // Display the available banking options to the user.
                 System.out.print("""
                     ### Select a menu ####
                     1) Show balance:
@@ -41,13 +46,14 @@ public class STAGE1 {
                 // Read the menu choice entered by the user.
                 option = scanner.nextInt();
 
+                // Handle the chosen option using a switch statement.
                 switch (option) {
                     case 1 -> System.out.printf("Current balance is: %.2f$\n", showBalance(balance));
                     case 2 -> {
                         System.out.print("Enter deposit amount: ");
                         double amount = scanner.nextDouble();
 
-                        // Make sure the deposit amount is valid.
+                        // Make sure the deposit amount is valid before updating the balance.
                         if (amount <= 0) {
                             System.out.print("Please input a valid amount");
                         } else {
@@ -58,7 +64,7 @@ public class STAGE1 {
                         System.out.print("Enter withdrawal amount: ");
                         double amount = scanner.nextDouble();
 
-                        // Make sure the withdrawal amount is valid.
+                        // Make sure the withdrawal amount is valid and that funds are available.
                         if (amount <= 0) {
                             System.out.print("Please input a valid amount");
                         } else if (amount > balance) {
@@ -68,6 +74,7 @@ public class STAGE1 {
                         }
                     }
                     case 4 -> {
+                        // Exit the program and say goodbye.
                         System.out.println("Exiting...");
                         System.out.println("Thanks for using our Banking App");
                     }
