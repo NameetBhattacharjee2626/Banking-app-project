@@ -15,6 +15,7 @@ public class BankingAppTests {
         testStage1Methods();
         testBankAccountMethods();
         testBankMethods();
+        testDeleteAccount();
         System.out.println("All banking app tests passed.");
     }
 
@@ -52,6 +53,11 @@ public class BankingAppTests {
         account.transferTo(recipient, 500);
         checkDouble(account.getBalanceValue(), 90, "transfer should reject overspending");
         checkDouble(recipient.getBalanceValue(), 70, "recipient balance should not change after invalid transfer");
+
+        String accountDescription = account.toString();
+        check(accountDescription.contains("Owner: Namit"), "toString should include the owner name");
+        check(accountDescription.contains("Account Number: 1001"), "toString should include the account number");
+        check(accountDescription.contains("Balance:"), "toString should include the balance");
     }
 
     private static void testBankMethods() {
@@ -64,6 +70,7 @@ public class BankingAppTests {
         bank.addAccount(second);
         bank.addAccount(third);
 
+        check(bank.countAccounts() == 3, "countAccounts should report the number of stored accounts");
         check(bank.accountExists(2002), "accountExists should find a stored account");
         check(!bank.accountExists(9999), "accountExists should return false for unknown account");
 
@@ -85,5 +92,22 @@ public class BankingAppTests {
 
         bank.deleteAccount(2003);
         check(!bank.accountExists(2003), "deleteAccount should remove the account from the bank");
+        check(bank.countAccounts() == 2, "countAccounts should update after deletion");
+    }
+
+    private static void testDeleteAccount() {
+        Bank bank = new Bank();
+        BankAccount account = new BankAccount("Mina", 4001, 75);
+        bank.addAccount(account);
+
+        check(bank.countAccounts() == 1, "bank should contain the newly added account");
+        check(bank.accountExists(4001), "account should exist before deletion");
+
+        bank.deleteAccount(4001);
+        check(!bank.accountExists(4001), "deleteAccount should remove the account");
+        check(bank.countAccounts() == 0, "countAccounts should become zero after deleting the only account");
+
+        bank.deleteAccount(9999);
+        check(bank.countAccounts() == 0, "deleting a missing account should not change the count");
     }
 }

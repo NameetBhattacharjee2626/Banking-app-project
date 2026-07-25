@@ -62,3 +62,56 @@
 - No menu loop rebuilt around objects — `main` currently just hardcodes two accounts and runs fixed test calls, no interactive flow.
 - Balance stored as `double`, not precision-safe for currency — `BigDecimal` refactor deferred intentionally (see decisions above).
 - No collection type yet for storing multiple accounts (arrays vs. `ArrayList` decision still open, pending Stage 4).
+
+# Stage 4 Learnings
+
+## 1. Overriding toString()
+
+Printing an object with `System.out.println(object)` automatically calls that object's `toString()` method.
+
+Without overriding it, Java prints the default format (`ClassName@hashcode`), which isn't useful.
+
+By overriding `toString()`, every `BankAccount` can describe itself without changing any existing `println()` statements.
+
+---
+
+## 2. Delegation over duplication
+
+The `Bank` should coordinate transfers, not perform the transfer logic itself.
+
+Its responsibility is to:
+- find the sender,
+- find the receiver,
+- verify both accounts exist,
+- call `sender.transferTo(receiver, amount)`.
+
+The validation (balance checks, invalid amounts) stays inside `BankAccount.transferTo()`.
+
+Keeping the logic in one place avoids duplicated code and future inconsistencies.
+
+---
+
+## 3. IDE suggestions vs. understanding
+
+My IDE suggested using a lambda expression to delete an account.
+
+I realized I didn't understand the generated code well enough to explain it.
+
+I replaced it with a simple loop that I fully understood.
+
+Rule for myself:
+> Don't keep code just because the IDE suggested it. If I can't explain every line, I shouldn't commit it.
+
+---
+
+## 4. Stale assertions (recurring lesson)
+
+I repeated a mistake I had already made in Stage 3.
+
+I changed the sequence of operations but forgot to recompute the expected result in my assertion.
+
+The banking code was correct.
+The expected value in the test was wrong.
+
+Personal reminder:
+> Whenever I change inputs, starting values, or business logic, I must manually recalculate every expected test value before trusting the assertion.

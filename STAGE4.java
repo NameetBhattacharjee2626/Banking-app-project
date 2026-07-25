@@ -35,10 +35,11 @@ class Bank {
         BankAccount account = findAccountByNumber(accountNumber);
         if (account != null) {
             accounts.remove(account);
-            System.out.println(account + " is deleted.");
+            System.out.println("Deleted account: " + account);
         } else {
-            System.out.println(accountNumber + " doesn't exist.");
+            System.out.println( "Account to be deleted doesn't exist.");
         }
+    
     }
 
     // Return all accounts stored in the bank.
@@ -87,7 +88,8 @@ class Bank {
             System.out.println("One or both accounts not found");
         }
     }
-    public int countAccounts(){
+
+    public int countAccounts() {
         return accounts.size();
     }
 }
@@ -95,14 +97,43 @@ class Bank {
 // This class is the main entry point for the stage.
 public class STAGE4 {
     public static void main(String[] args) {
-        Bank bank = new Bank();
-        BankAccount first = new BankAccount("Namit", 3012, 100);
-        BankAccount second = new BankAccount("Rahul", 3322, 50);
+    Bank bank = new Bank();
 
-        bank.addAccount(first);
-        bank.addAccount(second);
-
-        bank.transferBetweenAccounts(3012, 3322, 25);
-        System.out.println("Total holdings: " + bank.totalBankHoldings());
+    for (int i = 1; i <= 10; i++) {
+        BankAccount account = new BankAccount("Customer " + i, 3000 + i, 100 + (i * 25));
+        bank.addAccount(account);
+        System.out.println(account);
     }
+
+        System.out.println("Account count correct: " + (bank.countAccounts() == 10));
+        System.out.println("All accounts in the bank: " + bank.listAllAccounts().size());
+
+        System.out.println("Account count correct: " + (bank.countAccounts() == 10));
+
+BankAccount first = bank.findAccountByNumber(3001);
+BankAccount second = bank.findAccountByNumber(3002);
+
+if (first != null && second != null) {
+
+    first.deposit(50);
+    second.withdraw(20);
+    bank.transferBetweenAccounts(3001, 3002, 30);
+
+
+System.out.println("Withdraw/Transfer test: " + (second.getBalanceValue() == 160.0));
+}
+
+bank.deleteAccount(3006);
+
+System.out.println("Deletion successful: " + (!bank.accountExists(3006)));
+System.out.println("Account count after deletion: " + (bank.countAccounts() == 9));
+
+
+System.out.println("Total holdings: " + bank.totalBankHoldings());
+System.out.println("Accounts below 200: " +
+        bank.findBelowThreshold(200).size());
+
+System.out.println("Accounts owned by Customer 3: " +
+        bank.searchByOwner("Customer 3").size());
+}
 }
